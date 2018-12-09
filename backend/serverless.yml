@@ -1,14 +1,23 @@
 service: dat2ohanasi-backend
 
+plugins:
+  - serverless-domain-manager
+
 custom:
   defaultStage: dev
   api_version: v0
   common: common # serverless.ymlのバグ回避用
+  customDomain:
+    domainName: 'api.dat2.newgenerations.im'
+    certificateName: '*.newgenerations.im'
+    basePath: ''
+    stage: ${self:provider.stage}
+    createRoute53Record: true
+
 
 provider:
   name: aws
   runtime: provided
-  timeout: 300
   region: ap-northeast-1
   stage: ${opt:stage, self:custom.defaultStage}
   profile: qazx7412
