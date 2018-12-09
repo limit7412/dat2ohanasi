@@ -3,4 +3,6 @@
 
 ## backend/env.yml
 ```
+SLACK_ID:
+WEBHOOK_URL_IZUMI:
 ```

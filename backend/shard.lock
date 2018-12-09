@@ -1,0 +1,6 @@
+version: 1.0
+shards:
+  slack:
+    github: manastech/crystal_slack
+    commit: c12f5829ca8acdfc9e27744600fe19adaf4e0cd1
+
