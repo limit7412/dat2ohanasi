@@ -1,0 +1,7 @@
+name: dat2ohanasi-backend
+version: 0.1.0
+
+dependencies:
+  slack:
+    github: manastech/crystal_slack
+    branch: master
