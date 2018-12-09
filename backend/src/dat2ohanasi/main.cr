@@ -3,14 +3,17 @@ require "./../runtime/error_post"
 
 def dat2ohanasi(event)
   begin
+    raise LambdaException.new("死にました", 500)
     response = event
 
     return {
-      statusCode: 200,
+      status_code: 200,
       body: response
     }
+  rescue ex : LambdaException
+    LambdaError.send_slack ex, ex.status_code
   rescue ex
-    ErrorPost.send_slack ex
+    LambdaError.send_slack ex
   end
 end
 
