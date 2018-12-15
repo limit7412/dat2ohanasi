@@ -3,6 +3,7 @@ require "./../runtime/error_post"
 
 def dat2ohanasi(event)
   begin
+    raise LambdaException.new("死にました", 404)
     response = event
 
     return {

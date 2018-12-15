@@ -1,5 +1,5 @@
 require "json"
-# require "slack"
+require "slack"
 
 class LambdaException < Exception
   def initialize(@message : String, @status_code : Int32)
@@ -14,28 +14,23 @@ module LambdaError
   extend self
 
   def send_slack(error, status_code = 500)
+    message : String = "エラーみたい…確認してみよっか"
+    post = {
+      fallback: message,
+      pretext: "<@#{ENV["SLACK_ID"]}> #{message}",
+      title: error.message,
+      color: "#EB4646",
+      footer: "dat2ohanasi-backend",
+    }
+    attachments = [
+      JSON.parse(post.to_json)
+    ]
 
-    # message : String = "エラーみたい…確認してみよっか"
-    # post = {
-    #   fallback: message,
-    #   pretext: "<@#{ENV["SLACK_ID"]}> #{message}",
-    #   title: error.message,
-    #   text: error.backtrace.join("\n"),
-    #   color: "#EB4646",
-    #   footer: "dat2ohanasi-backend",
-    # }
-    # post = "test"
-    # body = {
-    #   attachments: [post]
-    # }
-
-    # HTTP::Client.post "#{ENV["WEBHOOK_URL_IZUMI"]}", body: body.to_json
-
-    # message = Slack::Message(
-    #   "aaa"
-    # )
-
-    # message.send_to_hook "#{ENV["WEBHOOK_URL_IZUMI"]}"
+    slack : Slack::Message = Slack::Message.new(
+      text: error.backtrace.join("\n"),
+      attachments: attachments
+    )
+    slack.send_to_hook "#{ENV["WEBHOOK_URL_IZUMI"]}"
 
     return {
       status_code: status_code,
