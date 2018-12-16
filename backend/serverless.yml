@@ -8,9 +8,6 @@ custom:
   api_version: v0
   common: common # serverless.ymlのバグ回避用
   customDomain:
-    # domainName: 'api.dat2.newgenerations.im'
-    # certificateName: '*.newgenerations.im'
-    # basePath: ''
     stage: ${self:provider.stage}
     createRoute53Record: true
 

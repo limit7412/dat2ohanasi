@@ -19,18 +19,15 @@ module LambdaError
       fallback: message,
       pretext: "<@#{ENV["SLACK_ID"]}> #{message}",
       title: error.message,
+      text: error.backtrace.join("\n"),
       color: "#EB4646",
       footer: "dat2ohanasi-backend",
     }
-    attachments = [
-      JSON.parse(post.to_json)
-    ]
+    body = {
+      attachments: [post]
+    }
 
-    slack : Slack::Message = Slack::Message.new(
-      text: error.backtrace.join("\n"),
-      attachments: attachments
-    )
-    slack.send_to_hook "#{ENV["WEBHOOK_URL_IZUMI"]}"
+    HTTP::Client.post "#{ENV["WEBHOOK_URL_IZUMI"]}", body: body.to_json
 
     return {
       status_code: status_code,
