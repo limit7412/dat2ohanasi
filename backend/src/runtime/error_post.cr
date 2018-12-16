@@ -1,5 +1,6 @@
 require "json"
-require "slack"
+require "uri"
+require "openssl"
 
 class LambdaException < Exception
   def initialize(@message : String, @status_code : Int32)
@@ -27,7 +28,14 @@ module LambdaError
       attachments: [post]
     }
 
-    HTTP::Client.post "#{ENV["WEBHOOK_URL_IZUMI"]}", body: body.to_json
+    ssl = OpenSSL::SSL::Context::Client.new
+    ssl.verify_mode = OpenSSL::SSL::VerifyMode::NONE
+    uri : URI = URI.parse "#{ENV["WEBHOOK_URL_IZUMI"]}"
+    slack : HTTP::Client = HTTP::Client.new(uri,
+      tls: ssl
+    )
+    slack.post "#{ENV["WEBHOOK_URL_IZUMI"]}", body: body.to_json
+    # slack.post "#{ENV["WEBHOOK_URL_IZUMI"]}", body: body.to_json
 
     return {
       status_code: status_code,
