@@ -4,6 +4,7 @@ require "openssl"
 
 class WebHook
   def initialize(@url : String)
+    @uri = URI.parse @url
   end
 
   def post(body)
@@ -11,10 +12,9 @@ class WebHook
     # Lambda上で動かないので一旦クライアント証明書は無視
     ssl.verify_mode = OpenSSL::SSL::VerifyMode::NONE
 
-    uri = URI.parse @url
-    client : HTTP::Client = HTTP::Client.new(uri,
+    HTTP::Client.post(@uri,
+      body: body.to_json,
       tls: ssl
     )
-    client.post @url, body: body.to_json
   end
 end
