@@ -1,2 +1,2 @@
 docker run --rm -v $(pwd):/src -w /src \
-           tjholowaychuk/up-crystal shards install
+           jhass/crystal-build-x86_64 shards install
