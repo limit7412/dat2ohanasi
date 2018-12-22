@@ -1,10 +1,12 @@
+require "./../app/app"
 require "./../runtime/handler"
 require "./../runtime/error_post"
 
 def dat2ohanasi(event)
   begin
     raise LambdaException.new("死にました", 404)
-    response = event
+    app = App.new event["url"]
+    response = app.get_data
 
     return {
       status_code: 200,
