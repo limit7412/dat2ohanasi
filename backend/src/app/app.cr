@@ -1,13 +1,15 @@
 require "json"
 require "uri"
+require "./../app/module/vip2ch"
 
 class App
   def initialize(@url : String)
-    @uri = URI.parse @url
+    dat = Vip2ch.new @url
   end
 
   def get_data
-    res = HTTP::Client.get "http://ex14.vip2ch.com/news4ssnip/dat/1505546603.dat"
-    return res
+    story = dat.get
+    return story
+    # return JSON.parse(res.body)
   end
 end
