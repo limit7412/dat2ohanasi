@@ -8,7 +8,7 @@ def dat2ohanasi(event)
     id : String = event["id"].as_s
 
     app : App = App.new id
-    response = app.get_data
+    response = app.get_ss
 
     return response
     # return {

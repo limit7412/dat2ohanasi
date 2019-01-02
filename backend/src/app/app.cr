@@ -7,8 +7,8 @@ class App
     @dat = Vip2ch.new @id
   end
 
-  def get_data
-    story = @dat.get_dat
+  def get_ss
+    story : Array(Array(String)) = @dat.parse
     return story
     # return JSON.parse(res.body)
   end
