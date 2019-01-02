@@ -2,15 +2,21 @@ require "json"
 require "uri"
 
 class Vip2ch
-  def initialize(@url : String)
+  def initialize(@id : String)
+    @url = "http://ex14.vip2ch.com/news4ssnip/dat/#{@id}.dat"
     @uri = URI.parse @url
-    # @ssl = OpenSSL::SSL::Context::Client.new
-    # # Lambda上で動かないので一旦クライアント証明書は無視
-    # @ssl.verify_mode = OpenSSL::SSL::VerifyMode::NONE
   end
 
-  def get_dat
-    res = HTTP::Client.get "http://ex14.vip2ch.com/news4ssnip/dat/1505546603.dat"
+  def get_dat : String
+    # Lambda上で明示的にクライアント証明書を示す必要がある
+    ssl = OpenSSL::SSL::Context::Client.new
+    ssl.ca_certificates = "/etc/pki/tls/cert.pem"
+
+    # 文字コード変換を別のLambdaで
+    res = HTTP::Client.get("#{ENV["ENCODING_URL"]}?url=#{@url}",
+      tls: ssl
+    )
+
     return res.body
   end
 end

@@ -5,9 +5,9 @@ require "./../runtime/error_post"
 def dat2ohanasi(event)
   begin
     # raise LambdaException.new("死にました", 404)
-    url : String = event["url"].as_s
+    id : String = event["id"].as_s
 
-    app : App = App.new url
+    app : App = App.new id
     response = app.get_data
 
     return response
