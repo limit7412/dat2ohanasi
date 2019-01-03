@@ -3,6 +3,7 @@ func=$1
 # main.crが存在する物だけを対象にしたい
 [ -f $(pwd)/src/$func/main.cr ] || exit 0
 
+[ -e $(pwd)/buildfile ] || mkdir $(pwd)/buildfile
 docker run --rm -v $(pwd):/src -w /src \
            jhass/crystal-build-x86_64 crystal build \
            --link-flags -static -o buildfile/$func src/$func/main.cr && \

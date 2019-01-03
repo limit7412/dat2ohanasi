@@ -30,9 +30,10 @@ module LambdaError
     slack : WebHook = WebHook.new  "#{ENV["WEBHOOK_URL_IZUMI"]}"
     slack.post body
 
-    return {
-      status_code: status_code,
-      body: error.message
-    }
+    return error.message
+    # return {
+    #   status_code: status_code,
+    #   body: error.message
+    # }
   end
 end
