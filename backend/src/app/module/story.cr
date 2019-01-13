@@ -26,5 +26,20 @@ module Story
     else
 
     end
+
+    return {
+      name:
+      text:
+      color:
+      icon:
+    }
+  end
+
+  def get_profile(name: String) :
+
+  end
+
+  def get_icon(code: String) : String
+
   end
 end
