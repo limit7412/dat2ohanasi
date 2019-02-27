@@ -2,35 +2,28 @@ module Story
   extend self
 
   def parse(dat : Array(Array(String))) : Array(String)
-    # datを一度配列なスレデータにパース
-    thread : Array(Array(String)) = dat
-      .shift
+    # datをssとしてパース
+    ss : Array(String) = dat
       .map{ |res|
+        # レスの投稿情報を排除
         res.shift
+        res
       }
       .flatten
       .map{ |item|
-        item
-          .strip
-          .select{ |item|
-            item
-          }
+        # スペースのみをブランクに変換
+        item.strip
       }
-    # スレをssのデータとして
-    ss : Array(String) =  thread
-      .map{ |item|
-        item.delete_at(0)
-      }
-      .flatten
-      .map{ |item|
-        # TODO: 空白のみの行を削除
+      .select{ |item|
+        # 空白行削除
+        !item.blank?
       }
 
     # ssをフロントでおはなしメーカー風に表示出来るように加工して返却
     return ss
-      .map{ |item|
-        create_message item
-      }
+      # .map{ |item|
+      #   create_message item
+      # }
     end
 
   def create_message(line : String)
@@ -43,8 +36,8 @@ module Story
       icon_url: String.new,
     }
 
-    # TODO: 「」があるかで処理分岐が必要
-    if line
+    # セリフか判定して分岐
+    if line.include?("「")
       # TODO: 名前からidを取得できるか
     else
       message[:text] = line
