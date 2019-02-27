@@ -10,7 +10,7 @@ class App
 
   def get_ss
     dat : Array(Array(String)) = @ssvip.get
-    story : Array(String) = Story.parse dat
+    story : Array(Hash(Symbol, String)) = Story.parse dat
     return story
   end
 end

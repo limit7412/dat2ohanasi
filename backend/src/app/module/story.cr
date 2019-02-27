@@ -1,7 +1,7 @@
 module Story
   extend self
 
-  def parse(dat : Array(Array(String))) : Array(String)
+  def parse(dat : Array(Array(String))) : Array(Hash(Symbol, String))
     # datをssとしてパース
     ss : Array(String) = dat
       .map{ |res|
@@ -21,24 +21,20 @@ module Story
 
     # ssをフロントでおはなしメーカー風に表示出来るように加工して返却
     return ss
-      # .map{ |item|
-      #   create_message item
-      # }
+      .map{ |item|
+        create_message item
+      }
     end
 
   def create_message(line : String)
     # 返却用データ準備
-    message = {
-      name: String.new,
-      idol_id: String.new,
-      text: String.new,
-      color: String.new,
-      icon_url: String.new,
-    }
+    message = {} of Symbol => String
 
     # セリフか判定して分岐
-    if line.include?("「")
-      # TODO: 名前からidを取得できるか
+    if line.includes?("「")
+      text = line.split("「")
+      message[:name] = text.shift
+      message[:text] = "「" + text.join("「")
     else
       message[:text] = line
     end
