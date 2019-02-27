@@ -6,7 +6,7 @@ module Dat
       .gsub("\\n", "")
       .gsub("<>", "")
       .split("</b>")
-      .map { |res|
+      .map{ |res|
         res.split("<br>")
       }
   end

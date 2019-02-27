@@ -1,6 +1,6 @@
 require "json"
 require "uri"
-require "./../dat"
+require "./dat"
 
 class Vip2ch
   def initialize(@id : String)

@@ -1,6 +1,7 @@
 require "json"
 require "uri"
-require "./../app/module/vip2ch"
+require "./module/vip2ch"
+require "./module/story"
 
 class App
   def initialize(@id : String)
@@ -9,8 +10,7 @@ class App
 
   def get_ss
     dat : Array(Array(String)) = @ssvip.get
-    story = dat
+    story : Array(Hash(Symbol, String)) = Story.parse dat
     return story
-    # return JSON.parse(res.body)
   end
 end
