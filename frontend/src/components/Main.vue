@@ -7,7 +7,7 @@
         v-model="form"
         type="text"></b-form-input>
     </b-input-group>
-    <b-button type="submit" variant="primary">生成</b-button>
+    <b-button type="submit" @click="submitFrom" variant="primary">生成</b-button>
   </div>
 </template>
 
