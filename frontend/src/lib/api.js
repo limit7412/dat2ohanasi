@@ -1,13 +1,21 @@
 import axios from 'axios'
+const client = axios.create({
+  baseURL: 'https://dat2.api.newgenerations.im',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  responseType: 'json',
+})
+
 
 export default {
   getStory: (id, callback, errCallback) => {
-    axios.get(`https://dat2.api.newgenerations.im/dev/ohanasi?id=${id}`, headers)
+    client.get(`/dev/ohanasi?id=${id}`)
       .then(response => {
-        cb(response)
+        callback(response)
       })
       .catch(error => {
-        err_cb(error)
+        errCallback(error)
       })
   }
 }

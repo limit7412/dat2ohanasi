@@ -13,9 +13,9 @@ const getters = {
 
 // actions
 const actions = {
-  submitFrom ({ dispatch }, id) {
+  submitFrom ({ state, dispatch }) {
     api.getStory(
-      id,
+      state.form,
       res => {
         dispatch('updateStory', res)
       },
