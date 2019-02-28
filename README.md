@@ -1,5 +1,5 @@
 # dat2ohanasi
-  - 某ハッカソンの準備リポジトリ
+  - SS速報VIPのアイマスSSをおはなしジェネレーター風に表示したいやつ
 
 ## backend/env.yml
 ```
